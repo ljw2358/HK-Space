@@ -1,380 +1,240 @@
 <!doctype html>
-<html lang="ko">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="theme-color" content="#070b14" />
+  <meta name="description" content="PHK Space Industry — Space Robotics, Orbital Systems, Launch & Infrastructure Automation." />
   <title>PHK Space Industry</title>
+
   <style>
     :root{
-      --bg:#070b14; --card:#0c1730; --muted:#9ab0d2; --text:#eef4ff;
-      --accent:#7cc3ff; --accent2:#a07cff; --line:rgba(255,255,255,.10);
-      --ok:#7dffb0;
+      --bg:#05070c;
+      --card:#0b1220;
+      --text:#e5e7eb;
+      --muted:#9ca3af;
+      --line:#1f2937;
+      --accent:#38bdf8;
+      --accent2:#22c55e;
     }
     *{box-sizing:border-box}
-    html,body{margin:0;padding:0;color:var(--text);
-      font-family:system-ui,-apple-system,Segoe UI,Roboto,Pretendard,Apple SD Gothic Neo,Noto Sans KR,Arial,sans-serif;
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple SD Gothic Neo","Noto Sans KR", sans-serif;
       background:
-        radial-gradient(1100px 750px at 18% 12%, rgba(124,195,255,.16), transparent 55%),
-        radial-gradient(900px 700px at 85% 18%, rgba(160,124,255,.12), transparent 55%),
-        radial-gradient(900px 700px at 60% 90%, rgba(125,255,176,.08), transparent 55%),
-        linear-gradient(180deg, #040611 0%, var(--bg) 45%, #040611 100%);
+        radial-gradient(1200px 700px at 20% 0%, #0b1c3d 0%, var(--bg) 60%),
+        radial-gradient(900px 600px at 80% 10%, #062b22 0%, var(--bg) 65%);
+      color:var(--text);
+      line-height:1.6;
     }
-    .wrap{max-width:1100px;margin:0 auto;padding:18px 16px 52px}
-    .topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;position:sticky;top:0;padding:10px 0;backdrop-filter: blur(10px);}
-    .brand{display:flex;gap:10px;align-items:center}
+    .wrap{max-width:1100px;margin:0 auto;padding:24px}
+    header{
+      display:flex;justify-content:space-between;align-items:center;gap:12px;
+      padding:14px 16px;border:1px solid var(--line);border-radius:16px;
+      background: rgba(11,18,32,.75);backdrop-filter: blur(10px);
+    }
+    .brand{display:flex;align-items:center;gap:12px}
     .logo{
-      width:38px;height:38px;border-radius:12px;
-      background:linear-gradient(135deg, rgba(124,195,255,.95), rgba(160,124,255,.70));
-      box-shadow:0 12px 30px rgba(124,195,255,.18);
-      display:grid;place-items:center;color:#03101a;font-weight:900;
+      width:40px;height:40px;border-radius:12px;
+      background: linear-gradient(135deg,var(--accent),var(--accent2));
+      box-shadow:0 12px 40px rgba(56,189,248,.35);
     }
-    .brand h1{margin:0;font-size:16px;letter-spacing:.3px}
-    .brand .sub{margin:2px 0 0;font-size:12px;color:var(--muted)}
-    .controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
-    .pill{border:1px solid var(--line);background:rgba(12,23,48,.55);color:var(--text);
-      padding:8px 10px;border-radius:999px;font-size:12px;cursor:pointer}
-    .pill:hover{border-color:rgba(124,195,255,.35)}
-    .pill.active{border-color:rgba(160,124,255,.55);box-shadow:0 0 0 3px rgba(160,124,255,.12) inset}
-    .hero{
-      margin-top:18px;padding:22px;border:1px solid var(--line);border-radius:18px;
-      background:linear-gradient(180deg, rgba(12,23,48,.72), rgba(12,23,48,.38));
-      box-shadow:0 18px 60px rgba(0,0,0,.35)
+    .brand h1{margin:0;font-size:16px}
+    .brand p{margin:2px 0 0;font-size:12px;color:var(--muted)}
+    .lang{
+      display:flex;gap:6px;padding:6px;border:1px solid var(--line);
+      border-radius:14px;background:rgba(15,23,42,.55)
     }
-    .kicker{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;border:1px solid var(--line);
-      border-radius:999px;color:var(--muted);font-size:12px;background:rgba(4,6,17,.35)}
-    .dot{width:8px;height:8px;border-radius:99px;background:var(--ok);box-shadow:0 0 0 4px rgba(125,255,176,.12)}
-    .title{margin:14px 0 8px;font-size:28px;line-height:1.2;letter-spacing:-.2px}
-    .desc{margin:0;color:var(--muted);font-size:14px;line-height:1.65}
-    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;margin-top:16px}
-    .card{grid-column:span 12;padding:16px;border:1px solid var(--line);border-radius:16px;background:rgba(12,23,48,.42)}
-    .card h3{margin:0 0 8px;font-size:15px}
-    .card p{margin:0;color:var(--muted);font-size:13px;line-height:1.65}
-    @media(min-width:860px){
-      .c4{grid-column:span 4}
-      .c6{grid-column:span 6}
-      .c8{grid-column:span 8}
+    .lang button{
+      background:transparent;border:1px solid transparent;color:var(--text);
+      padding:8px 10px;border-radius:12px;font-size:12px;cursor:pointer;opacity:.85
     }
-    .btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-    .btn{
-      padding:11px 14px;border-radius:14px;border:1px solid var(--line);
-      background:rgba(4,6,17,.35);cursor:pointer;font-weight:700;font-size:13px;
-      display:inline-flex;gap:10px;align-items:center;
+    .lang button.active{
+      background:rgba(56,189,248,.18);
+      border-color:rgba(56,189,248,.35);opacity:1
     }
-    .btn.primary{
-      border-color:rgba(124,195,255,.55);
-      background:linear-gradient(135deg, rgba(124,195,255,.22), rgba(160,124,255,.16));
-      box-shadow:0 14px 30px rgba(124,195,255,.10);
+    .hero{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;margin-top:18px}
+    @media(max-width:900px){.hero{grid-template-columns:1fr}}
+    .card{
+      border:1px solid var(--line);border-radius:18px;
+      background:rgba(11,18,32,.75);padding:18px
     }
-    .btn:hover{border-color:rgba(160,124,255,.45)}
-    .sectionTitle{margin:18px 0 10px;font-size:14px;color:var(--text);letter-spacing:.2px}
-    .list{display:grid;gap:10px}
-    .item{padding:14px;border:1px solid var(--line);border-radius:14px;background:rgba(12,23,48,.35)}
-    .item b{display:block;margin-bottom:6px;font-size:13px}
-    .item span{display:block;color:var(--muted);font-size:13px;line-height:1.6}
-    .footer{margin-top:18px;padding:14px;border-top:1px solid var(--line);color:var(--muted);font-size:12px;line-height:1.6}
-    .toast{
-      position:fixed;left:50%;bottom:18px;transform:translateX(-50%);
-      padding:10px 12px;border-radius:12px;border:1px solid var(--line);
-      background:rgba(12,23,48,.92);color:var(--text);font-size:12px;
-      opacity:0;pointer-events:none;transition:opacity .18s ease;max-width:92vw;
+    .headline{margin:0 0 10px;font-size:28px}
+    .sub{margin:0 0 14px;color:var(--muted)}
+    .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    @media(max-width:700px){.grid{grid-template-columns:1fr}}
+    .mini{
+      border:1px solid var(--line);border-radius:16px;
+      padding:14px;background:rgba(15,23,42,.55)
     }
-    .toast.show{opacity:1}
-    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
+    .mini h3{margin:0 0 6px;font-size:14px}
+    .mini p{margin:0;font-size:13px;color:var(--muted)}
+    .section{margin-top:16px}
+    footer{
+      margin-top:18px;padding:14px;border:1px solid var(--line);
+      border-radius:16px;background:rgba(15,23,42,.55);
+      display:flex;justify-content:space-between;flex-wrap:wrap;
+      font-size:12px;color:var(--muted)
+    }
+    .hide{display:none}
+    [dir="rtl"]{text-align:right}
   </style>
 </head>
+
 <body>
-  <div class="wrap">
-    <div class="topbar">
-      <div class="brand">
-        <div class="logo">PHK</div>
-        <div>
-          <h1 id="brandTitle">PHK Space Industry</h1>
-          <div class="sub" id="brandSub">우주산업 단독 사업/전략용 공식 앱</div>
-        </div>
-      </div>
-      <div class="controls">
-        <button class="pill" id="langAuto" type="button">AUTO</button>
-        <button class="pill" id="langKo" type="button">KO</button>
-        <button class="pill" id="langEn" type="button">EN</button>
-        <button class="pill" id="langAr" type="button">AR</button>
-      </div>
+<div class="wrap">
+
+<header>
+  <div class="brand">
+    <div class="logo"></div>
+    <div>
+      <h1>PHK Space Industry</h1>
+      <p id="tagline">Space Robotics & Orbital Infrastructure</p>
     </div>
-
-    <div class="hero">
-      <div class="kicker"><span class="dot"></span><span id="kickerText">사업자/조직용: 우주산업 단독 프레임</span></div>
-      <h2 class="title" id="heroTitle">“우주산업은 발사보다 ‘운영’이 돈이 된다.”</h2>
-      <p class="desc" id="heroDesc">
-        PHK Space Industry는 위성·발사 지원 로보틱스·우주 물류·궤도상 정비(IOPS)·장기 인프라 운영을
-        하나의 산업 생태계로 설계합니다.
-      </p>
-
-      <div class="btnrow">
-        <button class="btn primary" id="btnContact" type="button">📩 <span id="btnContactTxt">협업/초빙 문의</span></button>
-        <button class="btn" id="btnVision" type="button">🧭 <span id="btnVisionTxt">핵심 비전</span></button>
-        <button class="btn" id="btnRoadmap" type="button">🗺️ <span id="btnRoadmapTxt">로드맵</span></button>
-      </div>
-
-      <div class="grid">
-        <div class="card c6">
-          <h3 id="c1t">핵심 범위</h3>
-          <p id="c1d">상용화 전략 · 위성/탑재체 생태계 · 발사 지원 로보틱스 · 우주 물류 · 궤도상 정비(IOPS) · 안전/표준 · 장기운영</p>
-        </div>
-        <div class="card c6">
-          <h3 id="c2t">핵심 실행 원칙</h3>
-          <p id="c2d">(1) 운영/정비 중심 (2) 자동화·로보틱스 우선 (3) 안전·규격 우선 (4) 정부/대기업/국가 계약 중심</p>
-        </div>
-        <div class="card c4">
-          <h3 id="c3t">초빙(정예)</h3>
-          <p id="c3d">우주산업 전략 리더 1명 / 위성·발사·운영 전문가 1명(필요 시) / 로보틱스·AI 연동 1명(필요 시)</p>
-        </div>
-        <div class="card c4">
-          <h3 id="c4t">사업 목적</h3>
-          <p id="c4d">우주산업 단독 사업자 등록 → 파트너 협의 → 파일럿 설계 → 장기 인프라 운영 계약 프레임 구축</p>
-        </div>
-        <div class="card c4">
-          <h3 id="c5t">기대 효과</h3>
-          <p id="c5d">국가 우주 경쟁력 · 산업 확장성 · 장기 운영 수익 · 로보틱스/AI 고도화 기반</p>
-        </div>
-      </div>
-
-      <div class="sectionTitle" id="sec1">핵심 실행 항목</div>
-      <div class="list">
-        <div class="item"><b id="it1t">① 운영/정비 중심 산업화</b><span id="it1d">발사 이후: 관제·정비·업그레이드·수명연장·폐기까지 포함하는 운영 산업 구조 설계</span></div>
-        <div class="item"><b id="it2t">② 발사 지원 로보틱스</b><span id="it2d">발사장 자동화, 위험 작업 로봇화, 점검/검사/운송 프로세스 표준화</span></div>
-        <div class="item"><b id="it3t">③ 궤도상 정비(IOPS) & 우주 물류</b><span id="it3d">위성 수리·연료 보급·부품 교체·회수/폐기 로드맵 및 파트너십 프레임</span></div>
-      </div>
-
-      <div class="sectionTitle" id="sec2">연락 정보</div>
-      <div class="card">
-        <p class="desc" id="contactDesc">아래 버튼을 누르면 문의 문구가 복사됩니다. 링크드인 DM에 그대로 붙여넣어 주세요.</p>
-        <div class="btnrow">
-          <button class="btn primary" id="btnCopyDM" type="button">📋 <span id="copyDM">DM 문의 문구 복사</span></button>
-          <button class="btn" id="btnCopyBiz" type="button">📄 <span id="copyBiz">사업 소개 요약 복사</span></button>
-        </div>
-        <p class="desc mono" style="margin-top:10px;opacity:.9">* 연락처/이메일은 원하시는 것으로 교체하시면 됩니다.</p>
-      </div>
-
-      <div class="footer" id="footer">© PHK Space Industry. All rights reserved. <span class="mono">v1.0</span> · 우주산업 단독 앱 프레임</div>
-    </div>
-
-    <div class="toast" id="toast"></div>
   </div>
+  <div class="lang">
+    <button id="en" class="active" onclick="setLang('en')">EN</button>
+    <button id="ko" onclick="setLang('ko')">KO</button>
+    <button id="ar" onclick="setLang('ar')">AR</button>
+  </div>
+</header>
+
+<!-- EN -->
+<main id="en-c" class="hero">
+  <section class="card">
+    <h2 class="headline">Automation beyond Earth.</h2>
+    <p class="sub">
+      PHK Space Industry develops robotic systems and automation technologies
+      for space operations — from launch infrastructure to orbital servicing
+      and future off-world construction.
+    </p>
+    <ul class="sub">
+      <li>Space Robotics & Remote Operation</li>
+      <li>Launch Site & Ground Automation</li>
+      <li>Orbital Maintenance & Assembly</li>
+      <li>Future Lunar / Space Infrastructure</li>
+    </ul>
+  </section>
+
+  <aside class="card">
+    <h3>Core Domains</h3>
+    <div class="grid">
+      <div class="mini">
+        <h3>Launch Automation</h3>
+        <p>Robotic handling, inspection, and safety systems.</p>
+      </div>
+      <div class="mini">
+        <h3>Orbital Robotics</h3>
+        <p>Servicing, repair, and modular assembly in orbit.</p>
+      </div>
+      <div class="mini">
+        <h3>Space Infrastructure</h3>
+        <p>Robotic construction for stations and lunar bases.</p>
+      </div>
+      <div class="mini">
+        <h3>Extreme Environment Tech</h3>
+        <p>Radiation-safe, vacuum-ready robotic platforms.</p>
+      </div>
+    </div>
+  </aside>
+
+  <section class="card section" style="grid-column:1/-1">
+    <h3>Contact</h3>
+    <p>Email:
+      <a href="mailto:info@phkspace.com" style="color:var(--accent)">
+        info@phkspace.com
+      </a>
+    </p>
+  </section>
+</main>
+
+<!-- KO -->
+<main id="ko-c" class="hero hide">
+  <section class="card">
+    <h2 class="headline">지구를 넘어선 자동화.</h2>
+    <p class="sub">
+      PHK Space Industry는 발사 인프라부터 궤도 유지보수,
+      미래 우주 건설까지 아우르는 우주 로봇·자동화 기술을 개발합니다.
+    </p>
+    <ul class="sub">
+      <li>우주 로봇 및 원격 운용</li>
+      <li>발사장 자동화 시스템</li>
+      <li>궤도 유지·조립 로봇</li>
+      <li>달·우주 인프라 구축</li>
+    </ul>
+  </section>
+
+  <aside class="card">
+    <h3>핵심 분야</h3>
+    <div class="grid">
+      <div class="mini"><h3>발사 자동화</h3><p>로봇 기반 취급·검사·안전 시스템</p></div>
+      <div class="mini"><h3>궤도 로봇</h3><p>정비·수리·조립 자동화</p></div>
+      <div class="mini"><h3>우주 인프라</h3><p>정거장·달 기지 로봇 건설</p></div>
+      <div class="mini"><h3>극한 환경 기술</h3><p>방사선·진공 대응 플랫폼</p></div>
+    </div>
+  </aside>
+
+  <section class="card section" style="grid-column:1/-1">
+    <h3>문의</h3>
+    <p>Email:
+      <a href="mailto:info@phkspace.com" style="color:var(--accent)">
+        info@phkspace.com
+      </a>
+    </p>
+  </section>
+</main>
+
+<!-- AR -->
+<main id="ar-c" class="hero hide" dir="rtl">
+  <section class="card">
+    <h2 class="headline">أتمتة تتجاوز الأرض.</h2>
+    <p class="sub">
+      تطوّر PHK Space Industry أنظمة روبوتية وتقنيات أتمتة
+      لعمليات الإطلاق والصيانة المدارية والبنية التحتية الفضائية المستقبلية.
+    </p>
+    <ul class="sub">
+      <li>روبوتات فضائية وتشغيل عن بُعد</li>
+      <li>أتمتة مواقع الإطلاق</li>
+      <li>صيانة وتجميع مداري</li>
+      <li>بنية تحتية قمرية وفضائية</li>
+    </ul>
+  </section>
+
+  <aside class="card">
+    <h3>المجالات الأساسية</h3>
+    <div class="grid">
+      <div class="mini"><h3>أتمتة الإطلاق</h3><p>أنظمة فحص وسلامة روبوتية</p></div>
+      <div class="mini"><h3>روبوتات مدارية</h3><p>خدمة وصيانة وتجميع</p></div>
+      <div class="mini"><h3>بنية فضائية</h3><p>بناء محطات وقواعد قمرية</p></div>
+      <div class="mini"><h3>تقنيات بيئات قاسية</h3><p>منصات مقاومة للإشعاع والفراغ</p></div>
+    </div>
+  </aside>
+
+  <section class="card section" style="grid-column:1/-1">
+    <h3>التواصل</h3>
+    <p>
+      <a href="mailto:info@phkspace.com" style="color:var(--accent)">
+        info@phkspace.com
+      </a>
+    </p>
+  </section>
+</main>
+
+<footer>
+  <div>© <span id="y"></span> PHK Space Industry</div>
+  <div>Email: info@phkspace.com</div>
+</footer>
+
+</div>
 
 <script>
-  const TEXT = {
-    ko:{
-      dir:"ltr",
-      brandSub:"우주산업 단독 사업/전략용 공식 앱",
-      kicker:"사업자/조직용: 우주산업 단독 프레임",
-      heroTitle:"“우주산업은 발사보다 ‘운영’이 돈이 된다.”",
-      heroDesc:"PHK Space Industry는 위성·발사 지원 로보틱스·우주 물류·궤도상 정비(IOPS)·장기 인프라 운영을 하나의 산업 생태계로 설계합니다.",
-      btnContact:"협업/초빙 문의", btnVision:"핵심 비전", btnRoadmap:"로드맵",
-      c1t:"핵심 범위", c1d:"상용화 전략 · 위성/탑재체 생태계 · 발사 지원 로보틱스 · 우주 물류 · 궤도상 정비(IOPS) · 안전/표준 · 장기운영",
-      c2t:"핵심 실행 원칙", c2d:"(1) 운영/정비 중심 (2) 자동화·로보틱스 우선 (3) 안전·규격 우선 (4) 정부/대기업/국가 계약 중심",
-      c3t:"초빙(정예)", c3d:"우주산업 전략 리더 1명 / 위성·발사·운영 전문가 1명(필요 시) / 로보틱스·AI 연동 1명(필요 시)",
-      c4t:"사업 목적", c4d:"우주산업 단독 사업자 등록 → 파트너 협의 → 파일럿 설계 → 장기 인프라 운영 계약 프레임 구축",
-      c5t:"기대 효과", c5d:"국가 우주 경쟁력 · 산업 확장성 · 장기 운영 수익 · 로보틱스/AI 고도화 기반",
-      sec1:"핵심 실행 항목",
-      it1t:"① 운영/정비 중심 산업화", it1d:"발사 이후: 관제·정비·업그레이드·수명연장·폐기까지 포함하는 운영 산업 구조 설계",
-      it2t:"② 발사 지원 로보틱스", it2d:"발사장 자동화, 위험 작업 로봇화, 점검/검사/운송 프로세스 표준화",
-      it3t:"③ 궤도상 정비(IOPS) & 우주 물류", it3d:"위성 수리·연료 보급·부품 교체·회수/폐기 로드맵 및 파트너십 프레임",
-      sec2:"연락 정보",
-      contactDesc:"아래 버튼을 누르면 문의 문구가 복사됩니다. 링크드인 DM에 그대로 붙여넣어 주세요.",
-      copyDM:"DM 문의 문구 복사", copyBiz:"사업 소개 요약 복사",
-      footer:"© PHK Space Industry. All rights reserved. v1.0 · 우주산업 단독 앱 프레임",
-      copied:"복사 완료!", jumpVision:"비전 섹션으로 이동", jumpRoadmap:"로드맵(요약) 복사"
-    },
-    en:{
-      dir:"ltr",
-      brandSub:"Official Space-only app frame for business & strategy",
-      kicker:"Business/organization: Space-only frame",
-      heroTitle:"“In space, operations outlast launches.”",
-      heroDesc:"PHK Space Industry designs an industrial ecosystem across satellites, launch-support robotics, space logistics, in-orbit servicing (IOPS), and long-term infrastructure operations.",
-      btnContact:"Contact / Invitation", btnVision:"Core Vision", btnRoadmap:"Roadmap",
-      c1t:"Core Scope", c1d:"Commercialization strategy · Satellite/payload ecosystem · Launch-support robotics · Space logistics · In-orbit servicing · Safety/standards · Long-term operations",
-      c2t:"Execution Principles", c2d:"(1) Ops/maintenance-first (2) automation & robotics-first (3) safety & standards (4) gov/enterprise contracts",
-      c3t:"Inviting", c3d:"1 space-industry strategy lead / 1 satellite-launch-ops expert (as needed) / 1 robotics-AI integration lead (as needed)",
-      c4t:"Purpose", c4d:"Register space-only entity → partner discussions → pilot architecture → long-term operations contract framework",
-      c5t:"Impact", c5d:"National space competitiveness · scalable industry growth · long-term ops revenue · robotics/AI advancement",
-      sec1:"Key Execution Items",
-      it1t:"1) Ops & maintenance industrialization", it1d:"Design the business structure after launch: control, maintenance, upgrades, life extension, and disposal",
-      it2t:"2) Launch-support robotics", it2d:"Automate launch sites, robotize hazardous tasks, standardize inspection/transport processes",
-      it3t:"3) IOPS & space logistics", it3d:"Roadmap for repair, refuel, replacement, retrieval/disposal and partnership framework",
-      sec2:"Contact",
-      contactDesc:"Tap the buttons to copy inquiry text. Paste it into LinkedIn DM.",
-      copyDM:"Copy DM Text", copyBiz:"Copy Business Summary",
-      footer:"© PHK Space Industry. All rights reserved. v1.0 · Space-only app frame",
-      copied:"Copied!", jumpVision:"Moved to vision", jumpRoadmap:"Roadmap summary copied"
-    },
-    ar:{
-      dir:"rtl",
-      brandSub:"إطار رسمي لتطبيق واحد لنشاط صناعة الفضاء",
-      kicker:"نشاط/منظمة: إطار فضاء فقط",
-      heroTitle:"«في الفضاء… التشغيل أطول من الإطلاق.»",
-      heroDesc:"تصمم PHK Space Industry نظامًا صناعيًا يشمل الأقمار الصناعية وروبوتات دعم الإطلاق ولوجستيات الفضاء وخدمات المدار (IOPS) وتشغيل البنية التحتية طويلة الأمد.",
-      btnContact:"تواصل / دعوة", btnVision:"الرؤية", btnRoadmap:"خارطة الطريق",
-      c1t:"النطاق", c1d:"استراتيجية التسويق · نظام الأقمار/الحمولات · روبوتات دعم الإطلاق · لوجستيات الفضاء · خدمات المدار · السلامة والمعايير · تشغيل طويل",
-      c2t:"مبادئ التنفيذ", c2d:"(1) التشغيل/الصيانة أولاً (2) الأتمتة والروبوتات (3) السلامة والمعايير (4) عقود حكومية/شركات",
-      c3t:"نبحث عن", c3d:"قائد استراتيجية فضاء 1 / خبير أقمار-إطلاق-تشغيل (عند الحاجة) / قائد دمج روبوتات-ذكاء اصطناعي (عند الحاجة)",
-      c4t:"الهدف", c4d:"تسجيل كيان فضاء فقط → نقاش شركاء → هيكل تجريبي → إطار عقود تشغيل طويلة",
-      c5t:"الأثر", c5d:"تنافسية وطنية · نمو صناعي · عوائد تشغيل طويلة · تطوير الروبوتات والذكاء الاصطناعي",
-      sec1:"بنود التنفيذ",
-      it1t:"1) تصنيع التشغيل والصيانة", it1d:"تصميم العمل بعد الإطلاق: التحكم والصيانة والترقيات وإطالة العمر والتخلص",
-      it2t:"2) روبوتات دعم الإطلاق", it2d:"أتمتة مواقع الإطلاق وروبوتة المهام الخطرة وتوحيد التفتيش والنقل",
-      it3t:"3) خدمات المدار ولوجستيات الفضاء", it3d:"خارطة طريق للإصلاح والتزويد والبدائل والاسترجاع/التخلص وشراكات",
-      sec2:"التواصل",
-      contactDesc:"اضغط لنسخ نص الاستفسار والصقه في LinkedIn.",
-      copyDM:"نسخ نص الرسالة", copyBiz:"نسخ ملخص النشاط",
-      footer:"© PHK Space Industry. All rights reserved. v1.0 · إطار فضاء فقط",
-      copied:"تم النسخ!", jumpVision:"تم الانتقال للرؤية", jumpRoadmap:"تم نسخ ملخص خارطة الطريق"
-    }
-  };
-
-  const toastEl = document.getElementById("toast");
-  function toast(msg){
-    toastEl.textContent = msg;
-    toastEl.classList.add("show");
-    clearTimeout(window.__t);
-    window.__t = setTimeout(()=>toastEl.classList.remove("show"), 1400);
+  const map={en:"en-c",ko:"ko-c",ar:"ar-c"};
+  function setLang(l){
+    Object.values(map).forEach(id=>document.getElementById(id).classList.add("hide"));
+    document.getElementById(map[l]).classList.remove("hide");
+    ["en","ko","ar"].forEach(x=>document.getElementById(x).classList.remove("active"));
+    document.getElementById(l).classList.add("active");
+    document.documentElement.lang=l;
+    document.documentElement.dir=(l==="ar")?"rtl":"ltr";
   }
-  async function copy(text, lang){
-    try{ await navigator.clipboard.writeText(text); toast(TEXT[lang].copied); }
-    catch(e){
-      const ta=document.createElement("textarea"); ta.value=text; document.body.appendChild(ta);
-      ta.select(); document.execCommand("copy"); ta.remove();
-      toast(TEXT[lang].copied);
-    }
-  }
-  function pickAuto(){
-    const nav=(navigator.language||"ko").toLowerCase();
-    if(nav.startsWith("ar")) return "ar";
-    if(nav.startsWith("en")) return "en";
-    return "ko";
-  }
-  let mode="auto";
-  let current=pickAuto();
-
-  const els = {
-    brandSub:document.getElementById("brandSub"),
-    kicker:document.getElementById("kickerText"),
-    heroTitle:document.getElementById("heroTitle"),
-    heroDesc:document.getElementById("heroDesc"),
-    btnContactTxt:document.getElementById("btnContactTxt"),
-    btnVisionTxt:document.getElementById("btnVisionTxt"),
-    btnRoadmapTxt:document.getElementById("btnRoadmapTxt"),
-    c1t:document.getElementById("c1t"), c1d:document.getElementById("c1d"),
-    c2t:document.getElementById("c2t"), c2d:document.getElementById("c2d"),
-    c3t:document.getElementById("c3t"), c3d:document.getElementById("c3d"),
-    c4t:document.getElementById("c4t"), c4d:document.getElementById("c4d"),
-    c5t:document.getElementById("c5t"), c5d:document.getElementById("c5d"),
-    sec1:document.getElementById("sec1"),
-    it1t:document.getElementById("it1t"), it1d:document.getElementById("it1d"),
-    it2t:document.getElementById("it2t"), it2d:document.getElementById("it2d"),
-    it3t:document.getElementById("it3t"), it3d:document.getElementById("it3d"),
-    sec2:document.getElementById("sec2"),
-    contactDesc:document.getElementById("contactDesc"),
-    copyDM:document.getElementById("copyDM"),
-    copyBiz:document.getElementById("copyBiz"),
-    footer:document.getElementById("footer"),
-    auto:document.getElementById("langAuto"),
-    ko:document.getElementById("langKo"),
-    en:document.getElementById("langEn"),
-    ar:document.getElementById("langAr")
-  };
-
-  function setActive(){
-    [els.auto, els.ko, els.en, els.ar].forEach(b=>b.classList.remove("active"));
-    if(mode==="auto") els.auto.classList.add("active");
-    else{
-      if(current==="ko") els.ko.classList.add("active");
-      if(current==="en") els.en.classList.add("active");
-      if(current==="ar") els.ar.classList.add("active");
-    }
-  }
-
-  function apply(lang){
-    const t=TEXT[lang]||TEXT.ko;
-    document.documentElement.lang=lang;
-    document.documentElement.dir=t.dir;
-
-    els.brandSub.textContent=t.brandSub;
-    els.kicker.textContent=t.kicker;
-    els.heroTitle.textContent=t.heroTitle;
-    els.heroDesc.textContent=t.heroDesc;
-
-    els.btnContactTxt.textContent=t.btnContact;
-    els.btnVisionTxt.textContent=t.btnVision;
-    els.btnRoadmapTxt.textContent=t.btnRoadmap;
-
-    els.c1t.textContent=t.c1t; els.c1d.textContent=t.c1d;
-    els.c2t.textContent=t.c2t; els.c2d.textContent=t.c2d;
-    els.c3t.textContent=t.c3t; els.c3d.textContent=t.c3d;
-    els.c4t.textContent=t.c4t; els.c4d.textContent=t.c4d;
-    els.c5t.textContent=t.c5t; els.c5d.textContent=t.c5d;
-
-    els.sec1.textContent=t.sec1;
-    els.it1t.textContent=t.it1t; els.it1d.textContent=t.it1d;
-    els.it2t.textContent=t.it2t; els.it2d.textContent=t.it2d;
-    els.it3t.textContent=t.it3t; els.it3d.textContent=t.it3d;
-
-    els.sec2.textContent=t.sec2;
-    els.contactDesc.textContent=t.contactDesc;
-    els.copyDM.textContent=t.copyDM;
-    els.copyBiz.textContent=t.copyBiz;
-    els.footer.textContent=t.footer;
-
-    setActive();
-  }
-
-  document.getElementById("btnContact").addEventListener("click", ()=>{
-    const dm = current==="ko"
-      ? `[PHK Space Industry] 우주산업(위성·발사 지원 로보틱스·우주 물류·궤도상 정비) 관련 협업(또는 초빙) 논의를 요청드립니다.\n\n- 분야: (우주산업 전략 / 위성·발사·운영 / 로보틱스·AI 자동화)\n- 경력/프로젝트: (간단 요약)\n- 가능 일정: (예: 이번 주 20분 통화)\n\n비공개로 조용히 논의하고 싶습니다.`
-      : current==="ar"
-        ? `[PHK Space Industry] أود مناقشة تعاون/دعوة بشكل سري حول صناعة الفضاء.\n\n- المجال: (استراتيجية / أقمار-إطلاق-تشغيل / أتمتة روبوتات-ذكاء اصطناعي)\n- الخبرة: (ملخص)\n- الوقت المتاح: (مكالمة 20 دقيقة)\n\nلنناقش الأمر بهدوء وبشكل خاص.`
-        : `[PHK Space Industry] Requesting a discreet discussion on space industry (satellites, launch-support robotics, logistics, in-orbit servicing).\n\n- Domain: (strategy / satellite-launch-ops / robotics-AI automation)\n- Experience: (short)\n- Availability: (20-min call)\n\nI’d like a confidential conversation.`;
-    copy(dm, current);
-  });
-
-  document.getElementById("btnVision").addEventListener("click", ()=>{
-    window.scrollTo({top:0, behavior:"smooth"});
-    toast(TEXT[current].jumpVision);
-  });
-
-  document.getElementById("btnRoadmap").addEventListener("click", ()=>{
-    const road = current==="ko"
-      ? "로드맵(요약): ① 위성/탑재체 생태계 설계 → ② 발사 지원 로보틱스/자동화 → ③ 우주 물류/궤도상 정비(IOPS) 로드맵 → ④ 파트너 협의/파일럿 → ⑤ 장기 운영 계약 프레임"
-      : current==="ar"
-        ? "ملخص خارطة الطريق: 1) نظام الأقمار/الحمولات 2) روبوتات دعم الإطلاق 3) اللوجستيات وخدمات المدار 4) شركاء وتجربة 5) عقود تشغيل طويلة"
-        : "Roadmap: 1) satellite/payload ecosystem 2) launch-support robotics 3) logistics & IOPS 4) partners/pilot 5) long-term ops contracts";
-    copy(road, current);
-    toast(TEXT[current].jumpRoadmap);
-  });
-
-  document.getElementById("btnCopyDM").addEventListener("click", ()=>{
-    const t = current==="ko"
-      ? "PHK Space Industry는 ‘발사 이후 운영’ 중심의 우주산업 생태계를 설계합니다. 위성·발사 지원 로보틱스·우주 물류·궤도상 정비(IOPS)·장기 운영 관점에서 비공개 협업(또는 초빙) 논의를 요청드립니다."
-      : current==="ar"
-        ? "PHK Space Industry تصمم صناعة فضاء تتمحور حول التشغيل بعد الإطلاق. نناقش التعاون/الدعوة سريًا حول الأقمار ودعم الإطلاق واللوجستيات وخدمات المدار."
-        : "PHK Space Industry designs a space ecosystem centered on post-launch operations. Requesting a discreet discussion on satellites, launch-support robotics, logistics, and IOPS.";
-    copy(t, current);
-  });
-
-  document.getElementById("btnCopyBiz").addEventListener("click", ()=>{
-    const t = current==="ko"
-      ? "PHK Space Industry는 위성·발사 지원 로보틱스·우주 물류·궤도상 정비(IOPS)·장기 인프라 운영을 포함한 우주산업 단독 사업/조직입니다. ‘운영·정비 중심’ 산업화 프레임을 설계합니다."
-      : current==="ar"
-        ? "PHK Space Industry جهة متخصصة بصناعة الفضاء: أقمار وروبوتات دعم الإطلاق ولوجستيات وخدمات المدار وتشغيل طويل الأمد ضمن إطار صناعي."
-        : "PHK Space Industry covers satellites, launch-support robotics, space logistics, IOPS, and long-term operations, designing an ops-and-maintenance-first industrial framework.";
-    copy(t, current);
-  });
-
-  els.auto.addEventListener("click", ()=>{ mode="auto"; current=pickAuto(); apply(current); });
-  els.ko.addEventListener("click", ()=>{ mode="manual"; current="ko"; apply(current); });
-  els.en.addEventListener("click", ()=>{ mode="manual"; current="en"; apply(current); });
-  els.ar.addEventListener("click", ()=>{ mode="manual"; current="ar"; apply(current); });
-
-  apply(current); mode="auto"; setActive();
+  document.getElementById("y").textContent=new Date().getFullYear();
 </script>
-</body>
-</html>
