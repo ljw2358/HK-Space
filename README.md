@@ -1,6 +1,6 @@
-# PHK Space Industry
+# HK Space Industry
 
-PHK Space Industry is a space-industry focused organization dedicated to building an industrial-scale space ecosystem:
+HK Space Industry is a space-industry focused organization dedicated to building an industrial-scale space ecosystem:
 satellite, launch-support robotics, space logistics, in-orbit servicing, and long-term infrastructure operations.
 
 ## Scope
