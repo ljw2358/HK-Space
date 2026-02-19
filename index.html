@@ -3,282 +3,401 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HK-SPACE | Leading the Cosmic Frontier</title>
+    <meta name="description" content="HK-SPACE: Global Aerospace, Space Mining, and Mars Colonization by Hye-Gong">
+    <title>HK-SPACE | Beyond the Earth</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Noto+Sans+KR:wght@100;400;700&family=Noto+Sans+SC:wght@100;400;700&family=Noto+Sans+Arabic:wght@100;400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+KR:wght@100;400;700&family=Noto+Sans+SC:wght@100;400;700&family=Noto+Sans+Arabic:wght@100;400;700&family=JetBrains+Mono:wght@100;400&display=swap" rel="stylesheet">
     
     <style>
+        /* [1] GLOBAL SYSTEM VARIABLES */
         :root {
-            --space-blue: #00A3FF;
-            --deep-void: #02040a;
-            --nebula-purple: #7000FF;
-            --star-white: #ffffff;
-            --dust-gray: #888888;
+            --space-black: #010103;
+            --nebula-blue: #00d2ff;
+            --mars-red: #ff4b2b;
+            --void-white: #f5f5f7;
+            --gold-accent: #d4af37;
+            --glass: rgba(255, 255, 255, 0.05);
+            --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* [1] CSS Reset & Core Style */
+        /* [2] CORE LAYOUT */
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body { 
-            background: var(--deep-void); 
-            color: var(--star-white); 
+            background-color: var(--space-black); 
+            color: var(--void-white); 
             font-family: 'Noto Sans KR', sans-serif;
             overflow-x: hidden;
-            scroll-behavior: smooth;
+            line-height: 1.6;
         }
 
-        /* [2] Background Stars Effect */
-        .stars-container {
-            position: fixed; width: 100%; height: 100%; z-index: -1;
-            background: radial-gradient(circle at center, #0a0e1a 0%, #02040a 100%);
+        /* [3] COSMIC ANIMATED BACKGROUND */
+        #starfield {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; background: radial-gradient(circle at center, #050b18 0%, #010103 100%);
         }
-        .star {
-            position: absolute; background: white; border-radius: 50%;
-            animation: twinkle var(--d) infinite;
+        .nebula {
+            position: fixed; width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(0,210,255,0.1) 0%, transparent 70%);
+            filter: blur(50px); z-index: -1; pointer-events: none;
+            animation: drift 20s infinite alternate;
         }
-        @keyframes twinkle { 0%, 100% {opacity: 0.3;} 50% {opacity: 1;} }
+        @keyframes drift { from { transform: translate(-10%, -10%); } to { transform: translate(10%, 10%); } }
 
-        /* [3] Header & Navigation */
-        header {
-            height: 100vh; display: flex; flex-direction: column; 
-            justify-content: center; align-items: center; text-align: center;
-            background: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&q=80') no-repeat center/cover;
-            background-blend-mode: overlay; background-color: rgba(0,0,0,0.7);
-        }
-        .hero-title {
-            font-family: 'Orbitron'; font-size: 5rem; font-weight: 900;
-            letter-spacing: 15px; background: linear-gradient(to right, #fff, var(--space-blue));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
-        }
-        .hero-tag { font-family: 'Orbitron'; font-size: 1.2rem; color: var(--space-blue); letter-spacing: 5px; }
-
+        /* [4] NAVIGATION & BRANDING */
         nav {
-            position: sticky; top: 0; z-index: 1000; background: rgba(2, 4, 10, 0.9);
-            border-bottom: 1px solid rgba(255,255,255,0.1); padding: 15px 0;
-            display: flex; justify-content: center; gap: 15px; backdrop-filter: blur(10px);
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            background: rgba(1, 1, 3, 0.85); backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.05); padding: 15px 40px;
+            display: flex; justify-content: space-between; align-items: center;
         }
-        nav button {
-            padding: 10px 25px; border: 1px solid var(--space-blue);
-            background: transparent; color: var(--space-blue);
-            font-family: 'Orbitron'; cursor: pointer; border-radius: 5px;
-            transition: 0.3s;
+        .logo { font-family: 'Orbitron'; font-weight: 900; font-size: 1.8rem; letter-spacing: 5px; color: #fff; cursor: pointer; }
+        .logo span { color: var(--nebula-blue); }
+        
+        .lang-switch { display: flex; gap: 10px; }
+        .lang-btn {
+            background: transparent; border: 1px solid rgba(255,255,255,0.2);
+            color: #fff; padding: 8px 15px; font-family: 'Orbitron'; font-size: 0.7rem;
+            cursor: pointer; transition: var(--transition); border-radius: 3px;
         }
-        nav button:hover, nav button.active {
-            background: var(--space-blue); color: black; box-shadow: 0 0 20px var(--space-blue);
+        .lang-btn:hover, .lang-btn.active { 
+            background: var(--nebula-blue); color: #000; border-color: var(--nebula-blue);
+            box-shadow: 0 0 15px var(--nebula-blue);
         }
 
-        /* [4] Content Sections */
-        .content-container { max-width: 1200px; margin: 0 auto; padding: 100px 20px; display: none; }
-        .content-container.active { display: block; animation: fadeIn 0.8s ease; }
-        @keyframes fadeIn { from {opacity: 0; transform: translateY(20px);} to {opacity: 1; transform: translateY(0);} }
-
-        h2 { font-family: 'Orbitron'; font-size: 3rem; margin-bottom: 50px; border-bottom: 2px solid var(--space-blue); display: inline-block; padding-bottom: 10px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .card { 
-            background: rgba(255,255,255,0.05); padding: 40px; border-radius: 15px; 
-            border: 1px solid rgba(255,255,255,0.1); transition: 0.4s;
+        /* [5] HERO SECTION */
+        .hero {
+            height: 100vh; display: flex; flex-direction: column; justify-content: center;
+            align-items: center; text-align: center; padding: 0 20px;
         }
-        .card:hover { border-color: var(--nebula-purple); transform: scale(1.05); background: rgba(112, 0, 255, 0.05); }
-        .card h3 { font-family: 'Orbitron'; margin-bottom: 15px; color: var(--space-blue); }
+        .hero h1 { 
+            font-family: 'Orbitron'; font-size: clamp(3rem, 10vw, 7rem); font-weight: 900; 
+            margin-bottom: 20px; letter-spacing: -2px;
+            background: linear-gradient(180deg, #fff 30%, var(--nebula-blue) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+        .hero p { font-size: 1.5rem; color: #888; max-width: 800px; margin-bottom: 40px; font-weight: 100; }
+        
+        .cta-box { display: flex; gap: 20px; }
+        .btn-main {
+            padding: 15px 40px; font-family: 'Orbitron'; font-weight: 700;
+            text-transform: uppercase; border: 1px solid var(--nebula-blue);
+            background: transparent; color: var(--nebula-blue); cursor: pointer;
+            transition: var(--transition);
+        }
+        .btn-main:hover { background: var(--nebula-blue); color: #000; }
 
-        /* [5] Timeline Table */
-        .roadmap-table { width: 100%; border-collapse: collapse; margin-top: 50px; }
-        .roadmap-table th, .roadmap-table td { padding: 20px; border-bottom: 1px solid #222; text-align: left; }
-        .roadmap-table th { color: var(--space-blue); font-family: 'Orbitron'; text-transform: uppercase; }
+        /* [6] SECTION STYLING */
+        section { padding: 150px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 50px; }
+        .content-wrap { display: none; }
+        .content-wrap.active { display: block; animation: sectionFade 1s forwards; }
+        @keyframes sectionFade { from {opacity: 0; transform: translateY(30px);} to {opacity: 1; transform: translateY(0);} }
 
-        /* [6] Footer */
+        h2 { font-family: 'Orbitron'; font-size: 3rem; margin-bottom: 60px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 40px; }
+        
+        .info-card {
+            background: var(--glass); padding: 50px; border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.05); transition: var(--transition);
+            position: relative; overflow: hidden;
+        }
+        .info-card:hover { transform: translateY(-15px); border-color: var(--nebula-blue); }
+        .info-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+            background: var(--nebula-blue); opacity: 0; transition: var(--transition);
+        }
+        .info-card:hover::before { opacity: 1; }
+        .info-card h3 { font-family: 'Orbitron'; font-size: 1.8rem; margin-bottom: 20px; color: var(--nebula-blue); }
+
+        /* [7] TECHNICAL SPECS TABLE */
+        .tech-table {
+            width: 100%; border-collapse: collapse; margin-top: 50px;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.9rem;
+        }
+        .tech-table th { 
+            text-align: left; padding: 25px; color: var(--nebula-blue); 
+            border-bottom: 2px solid var(--nebula-blue); font-family: 'Orbitron';
+        }
+        .tech-table td { padding: 25px; border-bottom: 1px solid #1a1a1a; color: #aaa; }
+
+        /* [8] MISSION CONTROL UI */
+        .mission-ui {
+            background: #000; border: 1px solid #333; padding: 40px;
+            font-family: 'JetBrains Mono'; color: #0f0; margin-top: 100px;
+            border-radius: 10px; box-shadow: inset 0 0 20px rgba(0,255,0,0.1);
+        }
+        .cursor { display: inline-block; width: 10px; height: 1.2rem; background: #0f0; animation: blink 1s infinite; vertical-align: middle; }
+        @keyframes blink { 0%, 100% {opacity: 1;} 50% {opacity: 0;} }
+
+        /* [9] FOOTER */
         footer {
-            padding: 100px 0; background: #000; text-align: center; border-top: 1px solid #111;
+            padding: 120px 0; background: #000; text-align: center;
         }
-        .contact-box { margin-bottom: 30px; font-family: 'Orbitron'; font-size: 1.5rem; color: var(--space-blue); }
+        .footer-logo { font-family: 'Orbitron'; font-size: 2.5rem; font-weight: 900; margin-bottom: 20px; }
+        .contact-info { font-size: 1.8rem; color: var(--nebula-blue); font-family: 'Orbitron'; margin: 40px 0; }
+        .footer-links { display: flex; justify-content: center; gap: 40px; list-style: none; margin-bottom: 40px; color: #444; }
 
-        /* [7] RTL for Arabic */
-        .rtl { direction: rtl; font-family: 'Noto Sans Arabic', sans-serif; text-align: right; }
+        /* [10] RTL FOR ARABIC */
+        .rtl { direction: rtl; text-align: right; font-family: 'Noto Sans Arabic', sans-serif; }
     </style>
 </head>
-<body onload="setLanguage('en')">
+<body onload="initApp()">
 
-    <div class="stars-container" id="stars"></div>
+    <canvas id="starfield"></canvas>
+    <div class="nebula"></div>
 
-    <header>
-        <div class="hero-tag">EXPLORING THE UNKNOWN</div>
-        <h1 class="hero-title">HK-SPACE</h1>
-        <p style="font-size: 1.2rem; opacity: 0.7;">The Multi-Planetary Future of Humanity</p>
-    </header>
-
-    <nav id="lang-nav">
-        <button onclick="setLanguage('en')" id="btn-en">ENGLISH</button>
-        <button onclick="setLanguage('kr')" id="btn-kr">한국어</button>
-        <button onclick="setLanguage('cn')" id="btn-cn">中文</button>
-        <button onclick="setLanguage('ar')" id="btn-ar">العربية</button>
+    <nav>
+        <div class="logo" onclick="location.reload()">HK-<span>SPACE</span></div>
+        <div class="lang-switch">
+            <button class="lang-btn active" onclick="switchLang('en', this)">EN</button>
+            <button class="lang-btn" onclick="switchLang('kr', this)">KR</button>
+            <button class="lang-btn" onclick="switchLang('cn', this)">CN</button>
+            <button class="lang-btn" onclick="switchLang('ar', this)">AR</button>
+        </div>
     </nav>
 
-    <div id="en" class="content-container">
-        <h2>MISSION: COSMOS</h2>
-        <p style="font-size: 1.5rem; margin-bottom: 60px;">HK-SPACE is the premier global aerospace entity under the leadership of Chairman Hye-Gong. We specialize in deep-space exploration, orbital logistics, and asteroid mining.</p>
-        
-        <div class="grid">
-            <div class="card">
-                <h3>Reusable Rockets</h3>
-                <p>Developing HK-Nova Series rockets for 100% reusable orbital delivery systems, reducing cost by 90%.</p>
-            </div>
-            <div class="card">
-                <h3>Orbital Logistics</h3>
-                <p>Next-gen satellite deployment and maintenance using Figure AI-powered robotic arms in zero-gravity.</p>
-            </div>
-            <div class="card">
-                <h3>Mars Colonization</h3>
-                <p>Building the first sustainable human habitat on Mars using HK-Fusion energy and robotic terraforming.</p>
-            </div>
+    <section class="hero">
+        <h1 id="hero-title">BEYOND THE SKY</h1>
+        <p id="hero-sub">혜공 형님과 HK-SPACE가 여는 다행성 인류 시대. 우리는 지구를 넘어 은하계의 자원을 확보하고 새로운 문명을 건설합니다.</p>
+        <div class="cta-box">
+            <button class="btn-main" onclick="window.scrollTo(0, 1000)">Explore Missions</button>
+            <button class="btn-main" style="border-color: #fff; color: #fff;">Investor Relations</button>
         </div>
+    </section>
 
-        <h2 style="margin-top: 100px;">TECHNOLOGY STACK</h2>
-        
-        <table class="roadmap-table">
-            <tr><th>Sector</th><th>Tech Detail</th><th>Figure AI Role</th></tr>
-            <tr><td>Deep Space Propulsion</td><td>Plasma Ion Engines</td><td>Autonomous Diagnostic</td></tr>
-            <tr><td>Surface Mining</td><td>He-3 Extraction</td><td>Heavy-duty Mining Humanoid</td></tr>
-            <tr><td>Base Construction</td><td>3D Regolith Printing</td><td>Precision Engineering Bot</td></tr>
-        </table>
+    <div id="en" class="content-wrap active">
+        <section id="vision-en">
+            <div class="container">
+                <h2>Our Vision</h2>
+                <div class="grid">
+                    <div class="info-card">
+                        <h3>Asteroid Mining</h3>
+                        <p>Harvesting Rare Earth Elements and Platinum from Near-Earth Asteroids. HK-SPACE is the first to achieve robotic core drilling in deep space.</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Orbital Cities</h3>
+                        <p>Constructing the HK-Ring, a permanent habitat for 50,000 residents in Earth's orbit, powered by wireless fusion energy transmission.</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Interstellar Travel</h3>
+                        <p>Developing Anti-Matter propulsion systems to reach Alpha Centauri within a single human generation.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tech-en" style="background: rgba(255,255,255,0.01);">
+            <div class="container">
+                <h2>Figure AI Integration</h2>
+                <p>Humanoids are the essential workforce in space. Figure AI robots, customized by HK-SPACE, operate in environments where oxygen is non-existent and radiation is fatal.</p>
+                
+                <table class="tech-table">
+                    <tr><th>Mission Type</th><th>Unit Model</th><th>Primary Task</th><th>Deployment Status</th></tr>
+                    <tr><td>Mars Outpost</td><td>Figure-M1</td><td>Regolith Habitat Construction</td><td>Active</td></tr>
+                    <tr><td>Lunar Mining</td><td>Figure-L2</td><td>Helium-3 Extraction & Processing</td><td>Testing</td></tr>
+                    <tr><td>Orbital Station</td><td>Figure-S0</td><td>Zero-G Component Maintenance</td><td>Ready</td></tr>
+                </table>
+            </div>
+        </section>
     </div>
 
-    <div id="kr" class="content-container">
-        <h2>우주 개척의 중심</h2>
-        <p style="font-size: 1.5rem; margin-bottom: 60px;">혜공 형님의 HK-SPACE는 대한민국을 넘어 전 세계 우주 산업의 정점에 서 있습니다. 우리는 달 기지 건설부터 외계 광물 채굴까지 인류의 활동 범위를 확장합니다.</p>
-        
-        <div class="grid">
-            <div class="card">
-                <h3>차세대 발사체</h3>
-                <p>HK-노바 발사체를 통해 저궤도 수송 비용을 획기적으로 낮추고 우주 경제의 대중화를 선도합니다.</p>
+    <div id="kr" class="content-wrap">
+        <section id="vision-kr">
+            <div class="container">
+                <h2>우주 정복의 비전</h2>
+                <div class="grid">
+                    <div class="info-card">
+                        <h3>소행성 채굴 사업</h3>
+                        <p>희토류와 백금 등 지구에 희귀한 자원을 소행성에서 직접 채굴합니다. 혜공 형님의 선견지명으로 확보된 독자적 로봇 드릴링 기술이 핵심입니다.</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>다행성 거주지 건설</h3>
+                        <p>화성과 달에 영구적인 도시를 건설합니다. HK-SPACE의 특수 차폐 기술은 우주 방사선으로부터 거주민을 100% 보호합니다.</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>우주 물류 혁명</h3>
+                        <p>재사용 로켓 HK-Nova를 통해 킬로그램당 운송 비용을 기존 대비 95% 절감하여 우주 대중화 시대를 엽니다.</p>
+                    </div>
+                </div>
             </div>
-            <div class="card">
-                <h3>로봇 우주 유지보수</h3>
-                <p>Figure AI 휴머노이드를 우주 정거장에 투입하여 인간의 위험을 최소화하고 정밀한 보수를 수행합니다.</p>
-            </div>
-            <div class="card">
-                <h3>심우주 통신망</h3>
-                <p>화성과 지구를 잇는 고속 레이저 통신망 HK-Link를 구축하여 데이터 시차를 최소화합니다.</p>
-            </div>
-        </div>
+        </section>
 
-        <h2 style="margin-top: 100px;">사업 로드맵 (2026-2040)</h2>
-        <table class="roadmap-table">
-            <tr><th>단계</th><th>주요 목표</th><th>기대 효과</th></tr>
-            <tr><td>1단계 (2026)</td><td>재사용 로켓 HK-Nova 1호 발사</td><td>우주 수송 시장 점유율 1위</td></tr>
-            <tr><td>2단계 (2030)</td><td>달 궤도 정거장 HK-Gateway 완공</td><td>영구적 우주 거점 확보</td></tr>
-            <tr><td>3단계 (2035)</td><td>화성 유인 탐사 및 기지 건설</td><td>다행성 인류 시대의 개막</td></tr>
-        </table>
+        <section id="roadmap-kr">
+            <div class="container">
+                <h2>상업화 로드맵</h2>
+                <div class="mission-ui">
+                    <div>> INITIALIZING HK-SPACE ROADMAP...</div>
+                    <div>> PHASE 1: 2026 - Figure AI 로봇 우주 투입 및 저궤도 정거장 완공</div>
+                    <div>> PHASE 2: 2030 - 달 기지 'HK-LUNA' 가동 및 자원 채굴 시작</div>
+                    <div>> PHASE 3: 2035 - 화성 테라포밍 1단계 착수 및 정착민 이주</div>
+                    <div>> STATUS: <span style="color: yellow;">ALL SYSTEMS GO</span></div>
+                    <div class="cursor"></div>
+                </div>
+            </div>
+        </section>
     </div>
 
-    <div id="cn" class="content-container">
-        <h2>引领航天未来</h2>
-        <p style="font-size: 1.5rem; margin-bottom: 60px;">HK-SPACE 是惠公主席领导下的全球领先航天企业。我们致力于深空探测、轨道物流和行星资源开发。</p>
-        
-        <div class="grid">
-            <div class="card">
-                <h3>重型载人火箭</h3>
-                <p>研发具有完全自主知识产权的高推力火箭，助力人类重返月球并前往火星。</p>
+    <div id="cn" class="content-wrap">
+        <section id="vision-cn">
+            <div class="container">
+                <h2 style="font-family: 'Noto Sans SC';">航天愿景</h2>
+                <div class="grid">
+                    <div class="info-card">
+                        <h3>小行星开采</h3>
+                        <p>从近地小行星获取稀有金属。HK-SPACE 拥有全球领先的自动化深空钻探技术。</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>火星城市建设</h3>
+                        <p>在惠公主席的领导下，我们正在建设第一个自给自足的火星殖民地，利用核聚变提供无限能源。</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Figure AI 机器人</h3>
+                        <p>将仿生机器人与航天技术完美融合。机器人在零氧、高辐射环境下执行关键任务。</p>
+                    </div>
+                </div>
             </div>
-            <div class="card">
-                <h3>Figure AI 空间集成</h3>
-                <p>将 Figure AI 的仿生机器人应用于空间站维护，实现全自动化空间实验室运营。</p>
-            </div>
-            <div class="card">
-                <h3>小行星采矿</h3>
-                <p>利用自主巡航探测器捕捉含稀有金属的小行星，开启宇宙财富新纪元。</p>
-            </div>
-        </div>
+        </section>
 
-        <h2 style="margin-top: 100px;">全球合作体系</h2>
-        <ul style="list-style: none; font-size: 1.2rem;">
-            <li>• 亚太航天工业联盟中心</li>
-            <li>• 深空物资补给供应链系统</li>
-            <li>• 智能航天器自主控制算法</li>
-        </ul>
+        <section id="specs-cn">
+            <div class="container">
+                <h2 style="font-family: 'Noto Sans SC';">技术参数</h2>
+                <table class="tech-table">
+                    <tr><th>项目</th><th>参数</th><th>备注</th></tr>
+                    <tr><td>推进系统</td><td>离子等离子体发动机</td><td>比冲 5000s 以上</td></tr>
+                    <tr><td>能源方案</td><td>微型核聚变反应堆</td><td>支持 20 年连续供电</td></tr>
+                    <tr><td>自动化程度</td><td>100% (Figure AI 集成)</td><td>完全自主决策系统</td></tr>
+                </table>
+            </div>
+        </section>
     </div>
 
-    <div id="ar" class="content-container rtl">
-        <h2>قيادة العصر الكوني</h2>
-        <p style="font-size: 1.5rem; margin-bottom: 60px;">تعد شركة HK-SPACE، بقيادة رئيس مجلس الإدارة "هيي غونغ"، المؤسسة العالمية الرائدة في مجال الفضاء. نحن متخصصون في استكشاف الفضاء العميق، واللوجستيات المدارية، وتعدين الكويكبات.</p>
+    <div id="ar" class="content-wrap rtl">
+        <section id="vision-ar">
+            <div class="container">
+                <h2>رؤيتنا الكونية</h2>
+                <div class="grid">
+                    <div class="info-card">
+                        <h3>تعدين الكويكبات</h3>
+                        <p>استخراج المعادن الثمينة من الفضاء. نحن نفتح آفاقاً جديدة للاقتصاد العالمي تتجاوز حدود الأرض.</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>استعمار المريخ</h3>
+                        <p>بناء مدن مستدامة في الفضاء باستخدام أحدث تقنيات HK-SPACE. الفضاء هو مستقبل البشرية.</p>
+                    </div>
+                    <div class="info-card">
+                        <h3>الروبوتات المتقدمة</h3>
+                        <p>دمج ذكاء Figure AI في استكشاف المجرة. روبوتاتنا تعمل حيث لا يستطيع البشر البقاء.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
         
-        <div class="grid">
-            <div class="card">
-                <h3>الصواريخ القابلة لإعادة الاستخدام</h3>
-                <p>تطوير سلسلة صواريخ HK-Nova لتقليل تكاليف الإطلاق بنسبة ٩٠٪، مما يفتح آفاقاً جديدة للاستثمار الفضائي.</p>
+        <section id="contact-ar">
+            <div class="container">
+                <h2>اتصل بنا</h2>
+                <p>نحن نبحث عن شركاء استراتيجيين لتغيير وجه الكون. تواصل مع مكتب 혜공 형님.</p>
             </div>
-            <div class="card">
-                <h3>الروبوتات الفضائية Figure AI</h3>
-                <p>دمج ذكاء Figure AI في العمليات المدارية للقيام بالمهام المعقدة في بيئة انعدام الجاذبية.</p>
-            </div>
-            <div class="card">
-                <h3>استعمار المريخ</h3>
-                <p>بناء أول مستوطنة بشرية مستدامة على المريخ باستخدام تقنيات HK-Fusion للطاقة النظيفة.</p>
-            </div>
-        </div>
-
-        <h2 style="margin-top: 100px;">خارطة الطريق الاستراتيجية</h2>
-        <table class="roadmap-table">
-            <tr><th>المرحلة</th><th>الهدف الرئيسي</th><th>الحالة</th></tr>
-            <tr><td>الأولى</td><td>إطلاق مركز التميز الفضائي</td><td>مكتمل</td></tr>
-            <tr><td>الثانية</td><td>نشر شبكة الأقمار الصناعية العملاقة</td><td>قيد التنفيذ</td></tr>
-            <tr><td>الثالثة</td><td>أول رحلة تجارية مأهولة للمريخ</td><td>مخطط لها</td></tr>
-        </table>
+        </section>
     </div>
 
     <footer>
-        <div class="contact-box">CONTACT THE FRONTIER</div>
-        <p style="font-size: 2rem; font-weight: bold; margin-bottom: 20px;">info@hkspace.com</p>
-        <p style="color: #444; margin-bottom: 40px;">HK-GROUP GLOBAL HQ | SEOUL | DUBAI | SHANGHAI | MARS-CITY 1</p>
-        
-        <div style="font-family: 'Orbitron'; font-size: 0.8rem; color: #666;">
-            &copy; 2026 HK-SPACE AEROSPACE INC. ALL RIGHTS RESERVED BY CHAIRMAN HYE-GONG.<br>
-            CODE ARCHITECTURE BY BINI. 400+ LINES OF COSMIC CODE.
+        <div class="container">
+            <div class="footer-logo">HK-<span>SPACE</span></div>
+            <p style="opacity: 0.5;">Global Aerospace HQ | Galactic Exploration Group</p>
+            
+            <div class="contact-info">info@hkspace.com</div>
+            
+            <ul class="footer-links">
+                <li>Privacy Policy</li>
+                <li>Mars Settlement Terms</li>
+                <li>Figure AI Support</li>
+                <li>Investor Portal</li>
+            </ul>
+            
+            <p style="font-size: 0.8rem; color: #333;">
+                &copy; 2026 HK-SPACE INC. ALL RIGHTS RESERVED.<br>
+                AUTHORIZED BY CHAIRMAN HYE-GONG. ENGINEERED BY BINI.
+            </p>
         </div>
     </footer>
 
     <script>
-        // [1] Stars Background Generator
-        const starsContainer = document.getElementById('stars');
-        for (let i = 0; i < 200; i++) {
-            const star = document.createElement('div');
-            star.className = 'star';
-            const size = Math.random() * 3 + 'px';
-            star.style.width = size;
-            star.style.height = size;
-            star.style.left = Math.random() * 100 + '%';
-            star.style.top = Math.random() * 100 + '%';
-            star.style.setProperty('--d', (Math.random() * 3 + 2) + 's');
-            starsContainer.appendChild(star);
-        }
+        // [1] Language Switching Logic
+        function switchLang(lang, btn) {
+            // Update buttons
+            document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
 
-        // [2] Multi-Language Switching Logic
-        function setLanguage(lang) {
-            // Hide all containers
-            document.querySelectorAll('.content-container').forEach(el => {
-                el.classList.remove('active');
+            // Update contents
+            document.querySelectorAll('.content-wrap').forEach(w => {
+                w.classList.remove('active');
             });
-            // Show selected container
             document.getElementById(lang).classList.add('active');
-            
-            // Update Navigation Buttons Style
-            document.querySelectorAll('#lang-nav button').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.getElementById('btn-' + lang).classList.add('active');
 
-            // Scroll to the start of the content smoothly
-            if (window.scrollY > 300) {
-                window.scrollTo({ top: window.innerHeight - 50, behavior: 'smooth' });
+            // Dynamic UI adjustment
+            if(lang === 'ar') {
+                document.body.classList.add('rtl');
+            } else {
+                document.body.classList.remove('rtl');
             }
+
+            // Update Hero Text (Simple example)
+            const titles = {
+                'en': 'BEYOND THE SKY',
+                'kr': '지구 그 너머로',
+                'cn': '超越天空',
+                'ar': 'ما وراء السماء'
+            };
+            document.getElementById('hero-title').innerText = titles[lang];
         }
 
-        // [3] Extra Scroll Animation for Cards
+        // [2] Animated Starfield Background
+        function initApp() {
+            const canvas = document.getElementById('starfield');
+            const ctx = canvas.getContext('2d');
+            let stars = [];
+            
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            window.onresize = resize;
+            resize();
+
+            for(let i=0; i<300; i++) {
+                stars.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    size: Math.random() * 1.5,
+                    speed: Math.random() * 0.5
+                });
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#fff';
+                stars.forEach(s => {
+                    ctx.beginPath();
+                    ctx.arc(s.x, s.y, s.size, 0, Math.PI*2);
+                    ctx.fill();
+                    s.y -= s.speed;
+                    if(s.y < 0) s.y = canvas.height;
+                });
+                requestAnimationFrame(animate);
+            }
+            animate();
+            console.log("HK-SPACE SYSTEM ONLINE. WELCOME HYE-GONG.");
+        }
+
+        // [3] Scroll Reveal Effect
         window.addEventListener('scroll', () => {
-            const cards = document.querySelectorAll('.card');
+            const cards = document.querySelectorAll('.info-card');
             cards.forEach(card => {
-                const cardTop = card.getBoundingClientRect().top;
-                if(cardTop < window.innerHeight - 50) {
-                    card.style.opacity = '1';
+                const top = card.getBoundingClientRect().top;
+                if(top < window.innerHeight - 100) {
+                    card.style.opacity = "1";
+                    card.style.transform = "translateY(0)";
                 }
             });
         });
